@@ -1,6 +1,7 @@
 package com.example.reportingapi.controller;
 
 import com.example.reportingapi.model.User;
+import com.example.reportingapi.response.LoginResponse;
 import com.example.reportingapi.service.LoginService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,9 +25,9 @@ public class LoginController {
     @PostMapping(value = "/login")
     public ResponseEntity<String> loginUser(@RequestBody User user) throws IOException, InterruptedException {
         logger.info("loginUser::class::" + this.getClass().getSimpleName());
-        String token = loginService.loginUser(user);
-        if (token != null) {
-            return ResponseEntity.ok().body("Logged in successfully: "+ token);
+        LoginResponse response = loginService.loginUser(user);
+        if (response != null) {
+            return ResponseEntity.ok().body("Status: " + response.getStatus() + " Token: " + response.getToken());
         } else {
             return ResponseEntity.status(401).body("Login failed");
         }

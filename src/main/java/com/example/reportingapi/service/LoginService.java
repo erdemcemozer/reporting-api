@@ -1,6 +1,7 @@
 package com.example.reportingapi.service;
 
 import com.example.reportingapi.model.User;
+import com.example.reportingapi.response.LoginResponse;
 
 import java.io.IOException;
 
@@ -9,5 +10,5 @@ import java.io.IOException;
  * Date: 04/11/2023
  */
 public interface LoginService {
-    String loginUser(User user) throws IOException, InterruptedException;
+    LoginResponse loginUser(User user) throws IOException, InterruptedException;
 }

@@ -1,15 +1,13 @@
 package com.example.reportingapi.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * @Author Erdem Ozer
  * Date: 05/11/2023
  */
 
-@Getter
-@Setter
+@Data
 public class LoginResponse {
 
     private String token;
