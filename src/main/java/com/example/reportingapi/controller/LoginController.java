@@ -23,13 +23,9 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) throws IOException, InterruptedException {
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody User user) throws IOException, InterruptedException {
         logger.info("loginUser::class::" + this.getClass().getSimpleName());
         LoginResponse response = loginService.loginUser(user);
-        if (response != null) {
-            return ResponseEntity.ok().body("Status: " + response.getStatus() + " Token: " + response.getToken());
-        } else {
-            return ResponseEntity.status(401).body("Login failed");
-        }
+        return ResponseEntity.ok(response);
     }
 }

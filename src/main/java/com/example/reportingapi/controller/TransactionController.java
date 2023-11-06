@@ -1,7 +1,9 @@
 package com.example.reportingapi.controller;
 
+import com.example.reportingapi.model.TransactionList;
 import com.example.reportingapi.model.TransactionReport;
-import com.example.reportingapi.response.TransactionReportResponse;
+import com.example.reportingapi.response.TransactionResponse;
+import com.example.reportingapi.response.TransactionsReportResponse;
 import com.example.reportingapi.service.TransactionService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +27,16 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping(value = "/transactions/report")
-    public ResponseEntity<TransactionReportResponse> postReport(@RequestBody TransactionReport report) throws IOException, InterruptedException {
+    public ResponseEntity<TransactionsReportResponse> postReport(@RequestBody TransactionReport report) throws IOException, InterruptedException {
         logger.info("postReport::class::" + this.getClass().getSimpleName());
-        TransactionReportResponse response = transactionService.postReport(report);
+        TransactionsReportResponse response = transactionService.postReport(report);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/transaction/list")
+    public ResponseEntity<TransactionResponse> postTransactionList(@RequestBody TransactionList transactionList) throws IOException, InterruptedException {
+        logger.info("postTransaction::class::" + this.getClass().getSimpleName());
+        TransactionResponse response = transactionService.postTransactionList(transactionList);
         return ResponseEntity.ok(response);
     }
 }

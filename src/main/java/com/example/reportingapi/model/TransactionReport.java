@@ -10,6 +10,7 @@ import java.util.Date;
  */
 @Data
 public class TransactionReport {
+
     Date fromDate;
     Date toDate;
     Integer merchant;

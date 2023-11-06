@@ -8,8 +8,7 @@ import lombok.Data;
  */
 
 @Data
-public class LoginResponse {
+public class LoginResponse extends DefaultResponse {
 
     private String token;
-    private String status;
 }
