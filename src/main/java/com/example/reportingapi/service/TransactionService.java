@@ -13,5 +13,6 @@ import java.io.IOException;
  */
 public interface TransactionService {
     TransactionsReportResponse postReport(TransactionReport transactionReport) throws IOException, InterruptedException;
+
     TransactionResponse postTransactionList(TransactionList transactionList) throws IOException, InterruptedException;
 }

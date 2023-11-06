@@ -1,7 +1,6 @@
 package com.example.reportingapi.externalAPI;
 
 import com.example.reportingapi.constants.ReportingConstants;
-import com.example.reportingapi.model.TransactionReport;
 import com.example.reportingapi.model.User;
 import com.example.reportingapi.response.LoginResponse;
 import com.example.reportingapi.util.ParamBuilder;
@@ -15,7 +14,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.SimpleDateFormat;
 
 import static com.example.reportingapi.constants.ReportingConstants.CONTENT_TYPE_HEADER_NAME;
 import static com.example.reportingapi.constants.ReportingConstants.CONTENT_TYPE_HEADER_VALUE;
@@ -29,6 +27,7 @@ import static com.example.reportingapi.util.JsonWriter.addToJsonIfNotNull;
 @Component
 public class LoginAPI {
     private final ParamBuilder paramBuilder;
+
     @Autowired
     public LoginAPI(ParamBuilder paramBuilder) {
         this.paramBuilder = paramBuilder;

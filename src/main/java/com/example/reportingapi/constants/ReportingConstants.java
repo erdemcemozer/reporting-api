@@ -15,12 +15,13 @@ public class ReportingConstants {
     public static final String JSON_FIELD_MESSAGE = "message";
     public static final String JSON_FIELD_CODE = "code";
 
-    /** ENDPOINTS */
+    /**
+     * ENDPOINTS
+     */
     public static final String MERCHANT_USER_LOGIN_ENDPOINT = "merchant/user/login";
     public static final String TRANSACTION_REPORT_ENDPOINT = "transactions/report";
     public static final String TRANSACTION_LIST_ENDPOINT = "transaction/list";
     public static final String TRANSACTION_ENDPOINT = "transaction";
     public static final String CLIENT_ENDPOINT = "client";
-    /** ENDPOINTS */
 
 }

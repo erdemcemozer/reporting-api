@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class DefaultResponse {
+
     private Integer code;
     private String status;
     private String message;
