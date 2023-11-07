@@ -10,10 +10,6 @@ public class ReportingConstants {
     public static final String CONTENT_TYPE_HEADER_NAME = "Content-Type";
     public static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     public static final String CONTENT_TYPE_HEADER_VALUE = "application/json";
-    public static final String JSON_FIELD_TOKEN = "token";
-    public static final String JSON_FIELD_STATUS = "status";
-    public static final String JSON_FIELD_MESSAGE = "message";
-    public static final String JSON_FIELD_CODE = "code";
 
     /**
      * ENDPOINTS

@@ -1,8 +1,10 @@
 package com.example.reportingapi.service;
 
 import com.example.reportingapi.externalAPI.TransactionAPI;
+import com.example.reportingapi.model.Transaction;
 import com.example.reportingapi.model.TransactionList;
 import com.example.reportingapi.model.TransactionReport;
+import com.example.reportingapi.response.TransactionListResponse;
 import com.example.reportingapi.response.TransactionResponse;
 import com.example.reportingapi.response.TransactionsReportResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse postTransactionList(TransactionList transactionList) throws IOException, InterruptedException {
+    public TransactionListResponse postTransactionList(TransactionList transactionList) throws IOException, InterruptedException {
         return transactionAPI.postTransaction(transactionList);
+    }
+
+    @Override
+    public TransactionResponse getTransaction(Transaction transaction) throws IOException, InterruptedException {
+        return transactionAPI.getTransaction(transaction);
     }
 }

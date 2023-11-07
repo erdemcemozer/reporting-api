@@ -1,8 +1,10 @@
 package com.example.reportingapi.externalAPI;
 
 import com.example.reportingapi.constants.ReportingConstants;
+import com.example.reportingapi.model.Transaction;
 import com.example.reportingapi.model.TransactionList;
 import com.example.reportingapi.model.TransactionReport;
+import com.example.reportingapi.response.TransactionListResponse;
 import com.example.reportingapi.response.TransactionResponse;
 import com.example.reportingapi.response.TransactionsReportResponse;
 import com.example.reportingapi.util.ParamBuilder;
@@ -37,12 +39,11 @@ public class TransactionAPI {
         ObjectMapper objectMapper = new ObjectMapper();
         String externalApiUrl = paramBuilder.buildApiUrl(ReportingConstants.TRANSACTION_REPORT_ENDPOINT);
         String requestBody = createJsonFromTransactionReport(transactionReport);
-        String token = TokenStorage.getInstance().getToken();
 
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(URI.create(externalApiUrl))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
-                .header(AUTHORIZATION_HEADER_NAME, token)
+                .header(AUTHORIZATION_HEADER_NAME, TokenStorage.getInstance().getToken())
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
@@ -50,16 +51,31 @@ public class TransactionAPI {
         return objectMapper.readValue(response.body(), TransactionsReportResponse.class);
     }
 
-    public TransactionResponse postTransaction(TransactionList transactionList) throws IOException, InterruptedException {
+    public TransactionListResponse postTransaction(TransactionList transactionList) throws IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         String externalApiUrl = paramBuilder.buildApiUrl(TRANSACTION_LIST_ENDPOINT);
-        String requestBody = createJsonFromTransaction(transactionList);
-        String token = TokenStorage.getInstance().getToken();
+        String requestBody = createJsonFromTransactionList(transactionList);
 
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(URI.create(externalApiUrl))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
-                .header(AUTHORIZATION_HEADER_NAME, token)
+                .header(AUTHORIZATION_HEADER_NAME, TokenStorage.getInstance().getToken())
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return objectMapper.readValue(response.body(), TransactionListResponse.class);
+    }
+
+    public TransactionResponse getTransaction(Transaction transaction) throws IOException, InterruptedException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String externalApiUrl = paramBuilder.buildApiUrl(TRANSACTION_ENDPOINT);
+        String requestBody = createJsonFromTransaction(transaction);
+
+        var client = HttpClient.newHttpClient();
+        var request = HttpRequest.newBuilder(URI.create(externalApiUrl))
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
+                .header(AUTHORIZATION_HEADER_NAME, TokenStorage.getInstance().getToken())
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
@@ -80,7 +96,7 @@ public class TransactionAPI {
         return json.toString();
     }
 
-    public static String createJsonFromTransaction(TransactionList transactionList) {
+    public static String createJsonFromTransactionList(TransactionList transactionList) {
         ObjectMapper objectMapper = new ObjectMapper();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         ObjectNode json = objectMapper.createObjectNode();
@@ -96,6 +112,15 @@ public class TransactionAPI {
         addToJsonIfNotNull(json, "filterField", transactionList.getFilterField());
         addToJsonIfNotNull(json, "filterValue", transactionList.getFilterValue());
         addToJsonIfNotNull(json, "page", transactionList.getPage());
+
+        return json.toString();
+    }
+
+    public static String createJsonFromTransaction(Transaction transaction) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode json = objectMapper.createObjectNode();
+
+        addToJsonIfNotNull(json, "transactionId", transaction.getTransactionId());
 
         return json.toString();
     }
