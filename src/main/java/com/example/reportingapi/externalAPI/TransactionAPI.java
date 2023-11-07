@@ -10,7 +10,6 @@ import com.example.reportingapi.response.TransactionsReportResponse;
 import com.example.reportingapi.util.ParamBuilder;
 import com.example.reportingapi.util.TokenStorage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,10 +17,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.SimpleDateFormat;
 
 import static com.example.reportingapi.constants.ReportingConstants.*;
-import static com.example.reportingapi.util.JsonWriter.addToJsonIfNotNull;
+import static com.example.reportingapi.util.JsonWriter.*;
 
 /**
  * @Author Erdem Ozer
@@ -81,47 +79,5 @@ public class TransactionAPI {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return objectMapper.readValue(response.body(), TransactionResponse.class);
-    }
-
-    public static String createJsonFromTransactionReport(TransactionReport transactionReport) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        ObjectNode json = objectMapper.createObjectNode();
-
-        addToJsonIfNotNull(json, "fromDate", dateFormat.format(transactionReport.getFromDate()));
-        addToJsonIfNotNull(json, "toDate", dateFormat.format(transactionReport.getToDate()));
-        addToJsonIfNotNull(json, "merchant", transactionReport.getMerchant());
-        addToJsonIfNotNull(json, "acquirer", transactionReport.getAcquirer());
-
-        return json.toString();
-    }
-
-    public static String createJsonFromTransactionList(TransactionList transactionList) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        ObjectNode json = objectMapper.createObjectNode();
-
-        addToJsonIfNotNull(json, "fromDate", dateFormat.format(transactionList.getFromDate()));
-        addToJsonIfNotNull(json, "toDate", dateFormat.format(transactionList.getToDate()));
-        addToJsonIfNotNull(json, "status", transactionList.getStatus());
-        addToJsonIfNotNull(json, "operation", transactionList.getOperation());
-        addToJsonIfNotNull(json, "merchantId", transactionList.getMerchantId());
-        addToJsonIfNotNull(json, "acquirerId", transactionList.getAcquirerId());
-        addToJsonIfNotNull(json, "paymentMethod", transactionList.getPaymentMethod());
-        addToJsonIfNotNull(json, "errorCode", transactionList.getErrorCode());
-        addToJsonIfNotNull(json, "filterField", transactionList.getFilterField());
-        addToJsonIfNotNull(json, "filterValue", transactionList.getFilterValue());
-        addToJsonIfNotNull(json, "page", transactionList.getPage());
-
-        return json.toString();
-    }
-
-    public static String createJsonFromTransaction(Transaction transaction) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode json = objectMapper.createObjectNode();
-
-        addToJsonIfNotNull(json, "transactionId", transaction.getTransactionId());
-
-        return json.toString();
     }
 }
