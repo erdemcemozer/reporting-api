@@ -1,5 +1,6 @@
 package com.example.reportingapi.response;
 
+import com.example.reportingapi.model.CustomerInfo;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

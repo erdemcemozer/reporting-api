@@ -1,4 +1,4 @@
-package com.example.reportingapi.response;
+package com.example.reportingapi.model;
 
 import lombok.Data;
 
